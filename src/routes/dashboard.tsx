@@ -11,10 +11,10 @@ export const Route = createFileRoute("/dashboard")({
 
 const nav = [
   { to: "/dashboard", icon: LayoutDashboard, label: "Overview", exact: true },
-  { to: "/dashboard/menu", icon: UtensilsCrossed, label: "Menu" },
-  { to: "/dashboard/tables", icon: QrCode, label: "Tables & QR" },
-  { to: "/dashboard/kitchen", icon: ChefHat, label: "Kitchen" },
-  { to: "/dashboard/settings", icon: Settings, label: "Settings" },
+  { to: "/dashboard/menu", icon: UtensilsCrossed, label: "Menu", exact: false },
+  { to: "/dashboard/tables", icon: QrCode, label: "Tables & QR", exact: false },
+  { to: "/dashboard/kitchen", icon: ChefHat, label: "Kitchen", exact: false },
+  { to: "/dashboard/settings", icon: Settings, label: "Settings", exact: false },
 ] as const;
 
 function DashboardLayout() {
