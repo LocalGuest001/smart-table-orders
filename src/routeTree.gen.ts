@@ -18,6 +18,12 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardTablesRouteImport } from './routes/dashboard.tables'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardMenuRouteImport } from './routes/dashboard.menu'
+import { Route as DashboardKitchenRouteImport } from './routes/dashboard.kitchen'
+import { Route as MSlugTableIdRouteImport } from './routes/m.$slug.$tableId'
+import { Route as MSlugTableIdThanksRouteImport } from './routes/m.$slug.$tableId.thanks'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -64,6 +70,36 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardTablesRoute = DashboardTablesRouteImport.update({
+  id: '/tables',
+  path: '/tables',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMenuRoute = DashboardMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardKitchenRoute = DashboardKitchenRouteImport.update({
+  id: '/kitchen',
+  path: '/kitchen',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const MSlugTableIdRoute = MSlugTableIdRouteImport.update({
+  id: '/m/$slug/$tableId',
+  path: '/m/$slug/$tableId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MSlugTableIdThanksRoute = MSlugTableIdThanksRouteImport.update({
+  id: '/thanks',
+  path: '/thanks',
+  getParentRoute: () => MSlugTableIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,7 +110,13 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/m/$slug/$tableId': typeof MSlugTableIdRouteWithChildren
+  '/m/$slug/$tableId/thanks': typeof MSlugTableIdThanksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,7 +126,13 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/m/$slug/$tableId': typeof MSlugTableIdRouteWithChildren
+  '/m/$slug/$tableId/thanks': typeof MSlugTableIdThanksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,7 +144,13 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/m/$slug/$tableId': typeof MSlugTableIdRouteWithChildren
+  '/m/$slug/$tableId/thanks': typeof MSlugTableIdThanksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,7 +163,13 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/signup'
+    | '/dashboard/kitchen'
+    | '/dashboard/menu'
+    | '/dashboard/settings'
+    | '/dashboard/tables'
     | '/dashboard/'
+    | '/m/$slug/$tableId'
+    | '/m/$slug/$tableId/thanks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,7 +179,13 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/signup'
+    | '/dashboard/kitchen'
+    | '/dashboard/menu'
+    | '/dashboard/settings'
+    | '/dashboard/tables'
     | '/dashboard'
+    | '/m/$slug/$tableId'
+    | '/m/$slug/$tableId/thanks'
   id:
     | '__root__'
     | '/'
@@ -130,7 +196,13 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pricing'
     | '/signup'
+    | '/dashboard/kitchen'
+    | '/dashboard/menu'
+    | '/dashboard/settings'
+    | '/dashboard/tables'
     | '/dashboard/'
+    | '/m/$slug/$tableId'
+    | '/m/$slug/$tableId/thanks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -142,6 +214,7 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
   SignupRoute: typeof SignupRoute
+  MSlugTableIdRoute: typeof MSlugTableIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -209,19 +282,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/tables': {
+      id: '/dashboard/tables'
+      path: '/tables'
+      fullPath: '/dashboard/tables'
+      preLoaderRoute: typeof DashboardTablesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/menu': {
+      id: '/dashboard/menu'
+      path: '/menu'
+      fullPath: '/dashboard/menu'
+      preLoaderRoute: typeof DashboardMenuRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/kitchen': {
+      id: '/dashboard/kitchen'
+      path: '/kitchen'
+      fullPath: '/dashboard/kitchen'
+      preLoaderRoute: typeof DashboardKitchenRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/m/$slug/$tableId': {
+      id: '/m/$slug/$tableId'
+      path: '/m/$slug/$tableId'
+      fullPath: '/m/$slug/$tableId'
+      preLoaderRoute: typeof MSlugTableIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/m/$slug/$tableId/thanks': {
+      id: '/m/$slug/$tableId/thanks'
+      path: '/thanks'
+      fullPath: '/m/$slug/$tableId/thanks'
+      preLoaderRoute: typeof MSlugTableIdThanksRouteImport
+      parentRoute: typeof MSlugTableIdRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
+  DashboardKitchenRoute: typeof DashboardKitchenRoute
+  DashboardMenuRoute: typeof DashboardMenuRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardTablesRoute: typeof DashboardTablesRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardKitchenRoute: DashboardKitchenRoute,
+  DashboardMenuRoute: DashboardMenuRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardTablesRoute: DashboardTablesRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
+)
+
+interface MSlugTableIdRouteChildren {
+  MSlugTableIdThanksRoute: typeof MSlugTableIdThanksRoute
+}
+
+const MSlugTableIdRouteChildren: MSlugTableIdRouteChildren = {
+  MSlugTableIdThanksRoute: MSlugTableIdThanksRoute,
+}
+
+const MSlugTableIdRouteWithChildren = MSlugTableIdRoute._addFileChildren(
+  MSlugTableIdRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
@@ -233,7 +368,17 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
   SignupRoute: SignupRoute,
+  MSlugTableIdRoute: MSlugTableIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
