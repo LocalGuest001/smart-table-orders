@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as MenuRouteImport } from './routes/menu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -38,6 +39,11 @@ const PricingRoute = PricingRouteImport.update({
 const OnboardingRoute = OnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/login': typeof LoginRoute
+  '/menu': typeof MenuRoute
   '/onboarding': typeof OnboardingRoute
   '/pricing': typeof PricingRoute
   '/signup': typeof SignupRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/login'
+    | '/menu'
     | '/onboarding'
     | '/pricing'
     | '/signup'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/features'
     | '/login'
+    | '/menu'
     | '/onboarding'
     | '/pricing'
     | '/signup'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/login'
+    | '/menu'
     | '/onboarding'
     | '/pricing'
     | '/signup'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   LoginRoute: typeof LoginRoute
+  MenuRoute: typeof MenuRoute
   OnboardingRoute: typeof OnboardingRoute
   PricingRoute: typeof PricingRoute
   SignupRoute: typeof SignupRoute
@@ -238,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: '/onboarding'
       fullPath: '/onboarding'
       preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   FeaturesRoute: FeaturesRoute,
   LoginRoute: LoginRoute,
+  MenuRoute: MenuRoute,
   OnboardingRoute: OnboardingRoute,
   PricingRoute: PricingRoute,
   SignupRoute: SignupRoute,
