@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/types";
+import { formatPrice, FOOD_TYPE_LABEL, type FoodType } from "@/lib/types";
 
 export const Route = createFileRoute("/dashboard/menu")({ component: MenuPage });
 
