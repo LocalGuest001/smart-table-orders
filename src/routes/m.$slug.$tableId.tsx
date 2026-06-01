@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingBag, Plus, Minus, Check } from "lucide-react";
 import { useCart } from "@/lib/cart";
-import { formatPrice } from "@/lib/types";
+import { formatPrice, FOOD_TYPE_LABEL, type FoodType } from "@/lib/types";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/m/$slug/$tableId")({
