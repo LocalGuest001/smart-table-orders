@@ -24,7 +24,23 @@ type Item = {
   image_url: string | null;
   allergens: string[] | null;
   is_available: boolean;
+  food_type: FoodType;
 };
+
+const FOOD_TYPE_DOT: Record<FoodType, string> = {
+  veg: "bg-emerald-600",
+  non_veg: "bg-red-600",
+  jain: "bg-amber-500",
+};
+
+function FoodTypeBadge({ type }: { type: FoodType }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+      <span className={`h-2 w-2 rounded-full ${FOOD_TYPE_DOT[type]}`} />
+      {FOOD_TYPE_LABEL[type]}
+    </span>
+  );
+}
 
 function MenuPage() {
   const active = useActiveMembership();
