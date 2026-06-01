@@ -240,6 +240,7 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
       image_url: form.image_url || null,
       allergens: form.allergens.split(",").map((s) => s.trim()).filter(Boolean),
       is_available: form.is_available,
+      food_type: form.food_type,
     };
     const { error } = item
       ? await supabase.from("menu_items").update(payload).eq("id", item.id)
