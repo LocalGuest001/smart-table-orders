@@ -270,8 +270,8 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label>Price</Label>
-              <Input type="number" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+              <Label>Price (₹)</Label>
+              <Input type="number" step="1" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
             </div>
             <div className="space-y-2">
               <Label>Category</Label>
