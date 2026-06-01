@@ -154,6 +154,26 @@ function CustomerMenu() {
         </div>
       )}
 
+      {/* Food type filter */}
+      <div className="mx-auto flex max-w-2xl gap-2 px-4 pt-4">
+        {(["all", "veg", "non_veg", "jain"] as const).map((t) => {
+          const active = filter === t;
+          const label = t === "all" ? "All" : FOOD_TYPE_LABEL[t];
+          return (
+            <button
+              key={t}
+              onClick={() => setFilter(t)}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition ${
+                active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:bg-accent"
+              }`}
+            >
+              {t !== "all" && <span className={`h-2 w-2 rounded-full ${FOOD_TYPE_DOT[t]}`} />}
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Menu */}
       <main className="mx-auto max-w-2xl px-4 py-6">
         {categories.length === 0 && items.length === 0 && (
@@ -161,26 +181,38 @@ function CustomerMenu() {
             This menu is being prepared. Please check back soon.
           </p>
         )}
-        {categories.map((cat) => {
-          const catItems = items.filter((i) => i.category_id === cat.id);
-          if (catItems.length === 0) return null;
+        {(() => {
+          const visible = items.filter((i) => filter === "all" || i.food_type === filter);
           return (
-            <section key={cat.id} id={`cat-${cat.id}`} className="mb-8 scroll-mt-20">
-              <h2 className="mb-3 font-display text-2xl font-semibold">{cat.name}</h2>
-              <div className="space-y-3">
-                {catItems.map((it) => <MenuItemCard key={it.id} item={it} cart={cart} />)}
-              </div>
-            </section>
+            <>
+              {categories.map((cat) => {
+                const catItems = visible.filter((i) => i.category_id === cat.id);
+                if (catItems.length === 0) return null;
+                return (
+                  <section key={cat.id} id={`cat-${cat.id}`} className="mb-8 scroll-mt-20">
+                    <h2 className="mb-3 font-display text-2xl font-semibold">{cat.name}</h2>
+                    <div className="space-y-3">
+                      {catItems.map((it) => <MenuItemCard key={it.id} item={it} cart={cart} />)}
+                    </div>
+                  </section>
+                );
+              })}
+              {visible.some((i) => !i.category_id) && (
+                <section className="mb-8">
+                  <h2 className="mb-3 font-display text-2xl font-semibold">More</h2>
+                  <div className="space-y-3">
+                    {visible.filter((i) => !i.category_id).map((it) => <MenuItemCard key={it.id} item={it} cart={cart} />)}
+                  </div>
+                </section>
+              )}
+              {items.length > 0 && visible.length === 0 && (
+                <p className="rounded-2xl border border-dashed border-border bg-card p-12 text-center text-muted-foreground">
+                  No {filter === "all" ? "" : FOOD_TYPE_LABEL[filter as FoodType]} items available.
+                </p>
+              )}
+            </>
           );
-        })}
-        {items.some((i) => !i.category_id) && (
-          <section className="mb-8">
-            <h2 className="mb-3 font-display text-2xl font-semibold">More</h2>
-            <div className="space-y-3">
-              {items.filter((i) => !i.category_id).map((it) => <MenuItemCard key={it.id} item={it} cart={cart} />)}
-            </div>
-          </section>
-        )}
+        })()}
       </main>
 
       {/* Cart bar */}
