@@ -18,27 +18,29 @@ export const Route = createFileRoute("/pricing")({
 const plans = [
   {
     name: "Starter",
-    price: 19,
-    yearly: 190,
+    price: 1499,
+    yearly: 14990,
     desc: "Perfect for cafés and small restaurants.",
     features: ["Up to 50 menu items", "10 tables", "QR codes", "Real-time kitchen tickets", "Email support"],
   },
   {
     name: "Growth",
-    price: 49,
-    yearly: 490,
+    price: 3999,
+    yearly: 39990,
     desc: "For growing restaurants and hotels.",
     features: ["Unlimited menu items", "Unlimited tables", "Multi-role staff (owner/staff/chef)", "Branded customer menu", "Priority support"],
     popular: true,
   },
   {
     name: "Scale",
-    price: 129,
-    yearly: 1290,
+    price: 9999,
+    yearly: 99990,
     desc: "For multi-location and high-volume venues.",
     features: ["Everything in Growth", "Multi-location ready", "Custom domain", "Analytics dashboard", "Dedicated success manager"],
   },
 ];
+
+const inr = (n: number) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
 
 function Pricing() {
   return (
@@ -63,10 +65,10 @@ function Pricing() {
               <h3 className="font-display text-2xl font-semibold">{p.name}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="font-display text-5xl font-semibold">${p.price}</span>
+                <span className="font-display text-5xl font-semibold">{inr(p.price)}</span>
                 <span className="text-muted-foreground">/mo</span>
               </div>
-              <p className="text-xs text-muted-foreground">or ${p.yearly}/year (save 17%)</p>
+              <p className="text-xs text-muted-foreground">or {inr(p.yearly)}/year (save 17%)</p>
               <Button asChild className="mt-6 w-full" variant={p.popular ? "default" : "outline"}>
                 <Link to="/signup">Start free trial</Link>
               </Button>
