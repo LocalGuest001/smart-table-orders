@@ -224,6 +224,7 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
     allergens: (item?.allergens ?? []).join(", "),
     category_id: item?.category_id ?? (categories[0]?.id ?? ""),
     is_available: item?.is_available ?? true,
+    food_type: (item?.food_type ?? "veg") as FoodType,
   });
   const [busy, setBusy] = useState(false);
 
