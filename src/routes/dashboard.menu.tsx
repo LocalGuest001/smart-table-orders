@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Plus, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
-import { formatPrice } from "@/lib/types";
+import { formatPrice, FOOD_TYPE_LABEL, type FoodType } from "@/lib/types";
 
 export const Route = createFileRoute("/dashboard/menu")({ component: MenuPage });
 
@@ -24,7 +24,23 @@ type Item = {
   image_url: string | null;
   allergens: string[] | null;
   is_available: boolean;
+  food_type: FoodType;
 };
+
+const FOOD_TYPE_DOT: Record<FoodType, string> = {
+  veg: "bg-emerald-600",
+  non_veg: "bg-red-600",
+  jain: "bg-amber-500",
+};
+
+function FoodTypeBadge({ type }: { type: FoodType }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+      <span className={`h-2 w-2 rounded-full ${FOOD_TYPE_DOT[type]}`} />
+      {FOOD_TYPE_LABEL[type]}
+    </span>
+  );
+}
 
 function MenuPage() {
   const active = useActiveMembership();
@@ -134,7 +150,10 @@ function ItemCard({ item, categories, restaurantId, onChanged }: { item: Item; c
     <div className="flex flex-col rounded-2xl border border-border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="truncate font-semibold">{item.name}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="truncate font-semibold">{item.name}</h3>
+            <FoodTypeBadge type={item.food_type} />
+          </div>
           {item.description && <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{item.description}</p>}
           <p className="mt-2 font-display text-lg font-semibold text-primary">{formatPrice(Number(item.price))}</p>
         </div>
@@ -205,6 +224,7 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
     allergens: (item?.allergens ?? []).join(", "),
     category_id: item?.category_id ?? (categories[0]?.id ?? ""),
     is_available: item?.is_available ?? true,
+    food_type: (item?.food_type ?? "veg") as FoodType,
   });
   const [busy, setBusy] = useState(false);
 
@@ -220,6 +240,7 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
       image_url: form.image_url || null,
       allergens: form.allergens.split(",").map((s) => s.trim()).filter(Boolean),
       is_available: form.is_available,
+      food_type: form.food_type,
     };
     const { error } = item
       ? await supabase.from("menu_items").update(payload).eq("id", item.id)
@@ -249,8 +270,8 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label>Price</Label>
-              <Input type="number" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
+              <Label>Price (₹)</Label>
+              <Input type="number" step="1" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} />
             </div>
             <div className="space-y-2">
               <Label>Category</Label>
@@ -262,6 +283,24 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
                 <option value="">Uncategorized</option>
                 {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Food type</Label>
+            <div className="flex gap-2">
+              {(["veg", "non_veg", "jain"] as FoodType[]).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setForm({ ...form, food_type: t })}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm transition ${
+                    form.food_type === t ? "border-primary bg-primary/10 text-foreground" : "border-input bg-background text-muted-foreground hover:bg-accent"
+                  }`}
+                >
+                  <span className={`h-2.5 w-2.5 rounded-full ${FOOD_TYPE_DOT[t]}`} />
+                  {FOOD_TYPE_LABEL[t]}
+                </button>
+              ))}
             </div>
           </div>
           <div className="space-y-2">

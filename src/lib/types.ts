@@ -7,7 +7,15 @@ export type CartItem = {
 };
 
 export const formatPrice = (n: number) =>
-  new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
+  new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
+
+export type FoodType = "veg" | "non_veg" | "jain";
+
+export const FOOD_TYPE_LABEL: Record<FoodType, string> = {
+  veg: "Veg",
+  non_veg: "Non-veg",
+  jain: "Jain",
+};
 
 export const slugify = (s: string) =>
   s
