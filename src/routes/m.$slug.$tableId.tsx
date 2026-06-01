@@ -25,6 +25,13 @@ type Item = {
   image_url: string | null;
   allergens: string[] | null;
   is_available: boolean;
+  food_type: FoodType;
+};
+
+const FOOD_TYPE_DOT: Record<FoodType, string> = {
+  veg: "bg-emerald-600",
+  non_veg: "bg-red-600",
+  jain: "bg-amber-500",
 };
 
 function CustomerMenu() {
