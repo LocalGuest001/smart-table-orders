@@ -286,6 +286,24 @@ function ItemDialog({ restaurantId, categories, item, onSaved }: { restaurantId:
             </div>
           </div>
           <div className="space-y-2">
+            <Label>Food type</Label>
+            <div className="flex gap-2">
+              {(["veg", "non_veg", "jain"] as FoodType[]).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setForm({ ...form, food_type: t })}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm transition ${
+                    form.food_type === t ? "border-primary bg-primary/10 text-foreground" : "border-input bg-background text-muted-foreground hover:bg-accent"
+                  }`}
+                >
+                  <span className={`h-2.5 w-2.5 rounded-full ${FOOD_TYPE_DOT[t]}`} />
+                  {FOOD_TYPE_LABEL[t]}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-2">
             <Label>Description</Label>
             <Textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           </div>
