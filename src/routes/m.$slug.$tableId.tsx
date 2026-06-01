@@ -242,7 +242,12 @@ function MenuItemCard({ item, cart }: { item: Item; cart: ReturnType<typeof useC
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3">
       <div className="min-w-0 flex-1">
-        <h3 className="font-semibold leading-tight">{item.name}</h3>
+        <div className="flex items-center gap-2">
+          <span className={`flex h-4 w-4 items-center justify-center rounded-sm border-2 ${item.food_type === "non_veg" ? "border-red-600" : item.food_type === "jain" ? "border-amber-500" : "border-emerald-600"}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${FOOD_TYPE_DOT[item.food_type]}`} />
+          </span>
+          <h3 className="font-semibold leading-tight">{item.name}</h3>
+        </div>
         {item.description && <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{item.description}</p>}
         {item.allergens && item.allergens.length > 0 && (
           <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">Contains: {item.allergens.join(", ")}</p>
