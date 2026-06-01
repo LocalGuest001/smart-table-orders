@@ -43,6 +43,7 @@ function CustomerMenu() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [filter, setFilter] = useState<"all" | FoodType>("all");
 
   const cart = useCart(slug, tableId);
 
