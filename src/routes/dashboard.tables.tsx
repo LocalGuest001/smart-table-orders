@@ -60,13 +60,14 @@ function TablesPage() {
         <p className="mt-1 text-muted-foreground">Each table gets a unique QR code linked to your menu.</p>
       </div>
 
-      <form onSubmit={add} className="flex gap-2 rounded-2xl border border-border bg-card p-4">
+      <form onSubmit={add} className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-4 sm:flex-row">
         <Input
           placeholder="Table name (e.g. Table 1, Patio A, Bar 3)"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="flex-1"
         />
-        <Button type="submit" disabled={busy}><Plus className="mr-1 h-4 w-4" /> Add table</Button>
+        <Button type="submit" disabled={busy} className="shrink-0"><Plus className="mr-1 h-4 w-4" /> Add table</Button>
       </form>
 
       {tables.length === 0 ? (
